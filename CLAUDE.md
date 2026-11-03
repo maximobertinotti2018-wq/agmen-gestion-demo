@@ -24,3 +24,7 @@
 - Confirmar con el equipo dos supuestos: "Running no tiene cupos" se tomó como sin límite, y "gimnasio todos los días" como lunes a viernes.
 - Opcional: modo offline (descargar Tailwind y los íconos localmente) para presentar sin internet.
 - Para producción: backend con autenticación real y base de datos (Supabase) en lugar de `localStorage`.
+
+## Publicación
+- Sitio público (GitHub Pages, rama `main`, raíz): https://maximobertinotti2018-wq.github.io/agmen-gestion-demo/ · repo `maximobertinotti2018-wq/agmen-gestion-demo`. Para actualizar la demo: commit + `git push` (Pages se reconstruye solo en 1–2 min).
+- Link agregado en Confluence › espacio DDS › PP1 › Prototipo (02/11/2026).
