@@ -1,0 +1,15 @@
+{
+  "name": "agmen-gestion-demo",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AGMEN — Sistema de Gestión Integral (prototipo ISSD PPI 2026)",
+  "scripts": {
+    "start": "python -m http.server 5520 --bind 127.0.0.1",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}

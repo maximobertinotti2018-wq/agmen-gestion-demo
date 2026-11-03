@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGMEN — Sistema de Gestión Integral</title>
+  <link rel="icon" href="assets/agmen_logo_oficial.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Versiones fijas: una actualización de la CDN no puede romper la demo -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] } } }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ============================ LOGIN ============================ -->
+  <section id="pantalla-login" class="min-h-screen flex flex-col">
+    <header class="px-6 py-4 flex items-center justify-between border-b border-slate-800/70">
+      <div class="flex items-center gap-3">
+        <img src="assets/agmen_logo_oficial.png" alt="AGMEN" class="w-10 h-10 rounded-full object-contain">
+        <div>
+          <p class="font-extrabold tracking-tight">AGMEN <span class="text-cyan-400">· A Conciencia</span></p>
+          <p class="text-[11px] text-slate-400">Gimnasio Nueva Córdoba & Running Parque Sarmiento</p>
+        </div>
+      </div>
+      <button data-accion="info-issd" class="btn-ghost text-xs"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Proyecto ISSD</button>
+    </header>
+
+    <main class="flex-1 grid place-items-center p-4">
+      <div class="w-full max-w-md card p-6 sm:p-8">
+        <div class="text-center mb-6">
+          <img src="assets/agmen_logo_oficial.png" alt="" class="w-16 h-16 mx-auto rounded-full mb-3">
+          <h1 class="text-xl font-extrabold tracking-tight">Sistema de Gestión Integral</h1>
+          <p class="text-xs text-slate-400 mt-1">Elegí cómo querés ingresar</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold mb-5" role="tablist">
+          <button id="tab-login-personal" data-login-tab="personal" class="login-tab activo">Personal del gimnasio</button>
+          <button id="tab-login-socio" data-login-tab="socio" class="login-tab">Soy socio</button>
+        </div>
+
+        <form id="form-login-personal" class="space-y-4" autocomplete="off">
+          <label class="campo"><span>Usuario</span><input name="usuario" required class="input" placeholder="recepcion"></label>
+          <label class="campo"><span>Contraseña</span><input name="clave" type="password" required class="input"></label>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            Usuario de demostración (contraseña igual al usuario):
+            <button type="button" data-demo-user="recepcion" class="chip">recepcion</button>          </p>
+          <button class="btn-primary w-full justify-center"><i data-lucide="log-in" class="w-4 h-4"></i> Ingresar al panel</button>
+        </form>
+
+        <form id="form-login-socio" class="space-y-4 hidden" autocomplete="off">
+          <label class="campo"><span>DNI del socio</span><input name="dni" required inputmode="numeric" pattern="[0-9]{7,8}" class="input font-mono" placeholder="Ej: 34321248"></label>
+          <p class="text-[11px] text-slate-500">
+            Socios de prueba:
+            <button type="button" data-demo-dni="34321248" class="chip">34321248 · al día</button>
+            <button type="button" data-demo-dni="40112984" class="chip">40112984 · vencido</button>
+          </p>
+          <button class="btn-primary w-full justify-center"><i data-lucide="smartphone" class="w-4 h-4"></i> Entrar a mi portal</button>
+        </form>
+      </div>
+    </main>
+
+    <footer class="px-6 py-4 text-[11px] text-slate-500 flex flex-wrap justify-between gap-2 border-t border-slate-800/70">
+      <span>ISSD · Práctica Profesional I · 2026</span>
+      <button data-accion="reset-demo" class="hover:text-rose-300 underline underline-offset-2">Restablecer datos de la demo</button>
+    </footer>
+  </section>
+
+  <!-- ======================== PORTAL DEL SOCIO ======================== -->
+  <section id="pantalla-portal" class="hidden min-h-screen flex flex-col"></section>
+
+  <!-- ===================== PANEL DE GESTIÓN ===================== -->
+  <div id="pantalla-panel" class="hidden min-h-screen flex flex-col">
+    <header class="sticky top-0 z-30 bg-slate-950/90 backdrop-blur border-b border-slate-800 no-print">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+        <img src="assets/agmen_logo_oficial.png" alt="AGMEN" class="w-9 h-9 rounded-full object-contain">
+        <div class="min-w-0">
+          <p class="font-extrabold text-sm leading-tight">AGMEN</p>
+          <p id="usuario-actual" class="text-[11px] text-slate-400 truncate"></p>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button data-accion="info-issd" class="btn-icon" title="Proyecto ISSD"><i data-lucide="graduation-cap" class="w-4 h-4"></i></button>
+          <button data-accion="logout" class="btn-ghost text-xs"><i data-lucide="log-out" class="w-4 h-4"></i><span class="hidden sm:inline">Salir</span></button>
+        </div>
+      </div>
+      <nav id="nav-principal" class="max-w-7xl mx-auto px-4 pb-2 flex gap-1 overflow-x-auto text-xs font-semibold" aria-label="Módulos"></nav>
+    </header>
+
+    <div id="barra-kpis" class="border-b border-slate-800/70 bg-slate-900/40 no-print"></div>
+    <main id="vista" class="flex-1 w-full max-w-7xl mx-auto p-4 sm:p-6"></main>
+  </div>
+
+  <!-- Modal genérico (formularios, detalles y confirmaciones) -->
+  <div id="modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto no-print" role="dialog" aria-modal="true">
+    <div id="modal-caja" class="mx-auto my-8 card w-full max-w-lg"></div>
+  </div>
+
+  <!-- Comprobante imprimible (RF-11) -->
+  <div id="comprobante" class="hidden fixed inset-0 z-50 bg-slate-950/85 p-4 overflow-y-auto" role="dialog" aria-modal="true">
+    <div id="comprobante-hoja" class="mx-auto my-8 max-w-md bg-white text-slate-900 rounded-2xl p-7 text-xs shadow-2xl"></div>
+  </div>
+
+  <div id="toasts" class="fixed bottom-4 right-4 z-[60] space-y-2 pointer-events-none no-print"></div>
+
+  <script src="js/logic.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/views/recepcion.js"></script>
+  <script src="js/views/personas.js"></script>
+  <script src="js/views/turnos.js"></script>
+  <script src="js/views/entrenamiento.js"></script>
+  <script src="js/views/caja.js"></script>
+  <script src="js/views/stock.js"></script>
+  <script src="js/views/reportes.js"></script>
+  <script src="js/views/requisitos.js"></script>
+  <script src="js/views/portal.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
